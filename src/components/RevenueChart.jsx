@@ -70,7 +70,7 @@ export default function RevenueChart({ unit }) {
     }
 
     return (
-        <div className="card">
+        <div className="app-card">
             <h4>Faturamento</h4>
             <Line data={chartData} options={options} />
         </div>

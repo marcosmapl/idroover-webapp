@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import * as api from '../services/api'
 import { Doughnut } from 'react-chartjs-2'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 
@@ -8,21 +9,33 @@ export default function BrandDistributionChart({ unit }) {
     const [data, setData] = useState([])
 
     useEffect(() => {
-        try {
-            const vehicles = JSON.parse(localStorage.getItem('idroove_vehicles') || '{}')
-            const list = vehicles[unit] || []
-            const byBrand = list.reduce((acc, v) => {
-                acc[v.marca] = (acc[v.marca] || 0) + 1
-                return acc
-            }, {})
-            setData(Object.entries(byBrand).map(([brand, count]) => ({ brand, count })))
-        } catch (err) {
-            setData([])
-        }
+        let mounted = true
+        api.getVehicles()
+            .then(list => {
+                if (!mounted) return
+                const code = unit === 'Manaus' ? 1 : 2
+                const filtered = (list || []).filter(v => (v.codigoUnidade || v.codigo_unidade || v.unidade) == code)
+                const byBrand = filtered.reduce((acc, v) => { acc[v.marca] = (acc[v.marca] || 0) + 1; return acc }, {})
+                setData(Object.entries(byBrand).map(([brand, count]) => ({ brand, count })))
+            })
+            .catch(() => {
+                try {
+                    const vehicles = JSON.parse(localStorage.getItem('idroove_vehicles') || '{}')
+                    const list = vehicles[unit] || []
+                    const byBrand = list.reduce((acc, v) => {
+                        acc[v.marca] = (acc[v.marca] || 0) + 1
+                        return acc
+                    }, {})
+                    setData(Object.entries(byBrand).map(([brand, count]) => ({ brand, count })))
+                } catch {
+                    setData([])
+                }
+            })
+        return () => { mounted = false }
     }, [unit])
 
     if (!data.length) {
-        return (<div className="card"><h4>Distribuição por Marca</h4><p>Nenhum veículo cadastrado nessa unidade.</p></div>)
+        return (<div className="app-card"><h4>Distribuição por Marca</h4><p>Nenhum veículo cadastrado nessa unidade.</p></div>)
     }
 
     const chartData = {
@@ -31,7 +44,7 @@ export default function BrandDistributionChart({ unit }) {
     }
 
     return (
-        <div className="card">
+        <div className="app-card">
             <h4>Distribuição do Estoque por Marca</h4>
             <Doughnut data={chartData} />
         </div>

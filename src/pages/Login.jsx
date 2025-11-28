@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Footer from '../components/Footer'
+import { Container, Card, Form, Button } from 'react-bootstrap'
 
 export default function Login() {
     const [email, setEmail] = useState('')
@@ -18,44 +19,37 @@ export default function Login() {
         // Fake login - in real app call backend
         const user = { email, name: 'Usuário iDroove' }
         localStorage.setItem('idroove_user', JSON.stringify(user))
-        // Debug: log to console so it's easy to confirm login happened
         console.log('iDroove: logged in as', user)
-        // Use replace to avoid going back to the login page via browser back button
         navigate('/', { replace: true })
-        // Fallback in case router navigation fails for some reason
         setTimeout(() => {
             if (location.pathname !== '/') window.location.href = '/'
         }, 200)
     }
 
     return (
-        <div className="page login-page">
-            <div className="card login-card">
-                <h1>iDroove Car</h1>
-                <p className="subtitle">Preencha com as credenciais de acesso:</p>
-                <form onSubmit={handleSubmit} className="login-form">
-                    <label>
-                        E-mail
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="seu@exemplo.com"
-                        />
-                    </label>
-                    <label>
-                        Senha
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="Senha"
-                        />
-                    </label>
-                    {error && <div className="error">{error}</div>}
-                    <button type="submit" className="btn primary">Entrar</button>
-                </form>
-            </div>
+        <div className="app-page login-page">
+            <Container style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+                <Card className="app-login-card" style={{ width: '100%', maxWidth: 640 }}>
+                    <Card.Body>
+                        <Card.Title>iDroove Car</Card.Title>
+                        <Card.Text className="subtitle">Preencha com as credenciais de acesso:</Card.Text>
+                        <Form onSubmit={handleSubmit}>
+                            <Form.Group className="mb-3" controlId="loginEmail">
+                                <Form.Label>E-mail</Form.Label>
+                                <Form.Control type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="seu@exemplo.com" />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="loginPassword">
+                                <Form.Label>Senha</Form.Label>
+                                <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Senha" />
+                            </Form.Group>
+                            {error && <div className="error">{error}</div>}
+                            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                <Button type="submit" variant="primary">Entrar</Button>
+                            </div>
+                        </Form>
+                    </Card.Body>
+                </Card>
+            </Container>
             <Footer />
         </div>
     )

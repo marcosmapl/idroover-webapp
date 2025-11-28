@@ -1,3 +1,5 @@
+/* Replaced with app-prefixed styles below to avoid Bootstrap collisions. */
+
 :root {
     --bg: #f5f7fb;
     --card: #fff;
@@ -7,7 +9,7 @@
 
 * {
     box-sizing: border-box;
-    font-family: Inter, system-ui, Arial, sans-serif
+    font-family: Inter, system-ui, Arial, sans-serif;
 }
 
 body,
@@ -15,10 +17,11 @@ html,
 #root {
     height: 100%;
     margin: 0;
-    background: var(--bg)
+    background: var(--bg);
 }
 
-.page {
+/* Page wrapper (app-prefixed to avoid Bootstrap collision) */
+.app-page {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -32,40 +35,44 @@ html,
     justify-content: space-between;
     padding: 12px 20px;
     background: #fff;
-    border-bottom: 1px solid #e6e9ef
+    border-bottom: 1px solid #e6e9ef;
 }
 
 .topbar-brand {
     font-weight: 700;
-    color: var(--primary)
+    color: var(--primary);
 }
 
 .topbar-nav a {
     margin-right: 10px;
     color: var(--muted);
-    text-decoration: none
+    text-decoration: none;
 }
 
 .topbar-actions {
     display: flex;
     gap: 8px;
-    align-items: center
+    align-items: center;
 }
 
-.container {
+/* App-scoped container */
+.app-container {
     padding: 20px;
     max-width: 85%;
-    margin: 0 auto
+    margin: 0 auto;
+    padding-bottom: 40px;
+    /* avoid footer overlay */
 }
 
-.card {
+/* App-scoped card */
+.app-card {
     background: var(--card);
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 5px 14px rgba(10, 10, 10, 0.03)
+    box-shadow: 0 5px 14px rgba(10, 10, 10, 0.03);
 }
 
-/* Vehicles specific styles: limit table to 85% of container width */
+/* Vehicles specific styles */
 .vehicles-card {
     width: 85vw;
     max-width: 1600px;
@@ -73,7 +80,7 @@ html,
 
 .vehicles-card .vehicles-table-wrap {
     width: 100%;
-    overflow-x: visible
+    overflow-x: visible;
 }
 
 .vehicles-card .vehicles-table {
@@ -84,13 +91,13 @@ html,
     .vehicles-card {
         width: 100%;
         margin-left: auto;
-        margin-right: auto
+        margin-right: auto;
     }
 
     .vehicles-card .vehicles-table-wrap {
         width: 100%;
         margin-left: auto;
-        margin-right: auto
+        margin-right: auto;
     }
 }
 
@@ -105,18 +112,18 @@ html,
     border: 1px solid transparent;
     background: transparent;
     cursor: pointer;
-    padding: 0
+    padding: 0;
 }
 
 .btn-icon svg {
-    display: block
+    display: block;
 }
 
 .btn-icon.btn-edit {
     background: var(--primary);
     color: #fff;
     margin: 0 10px;
-    border-color: var(--primary)
+    border-color: var(--primary);
 }
 
 .btn-icon.btn-edit:hover {
@@ -126,7 +133,7 @@ html,
 .btn-icon.btn-delete {
     background: #e55b5b;
     color: #fff;
-    border-color: #e55b5b
+    border-color: #e55b5b;
 }
 
 .btn-icon.btn-delete:hover {
@@ -135,32 +142,182 @@ html,
 
 table {
     width: 100%;
-    border-collapse: collapse
+    border-collapse: collapse;
 }
 
 th,
 td {
     border: 1px solid #eee;
     padding: 8px;
-    text-align: left
+    text-align: left;
 }
 
 thead th {
     background: #fafafa
 }
 
-.page-header h2 {
+/* Page header */
+.app-page-header h2 {
     margin: 0
 }
 
-.page-header input {
+.app-page-header input {
     padding: 8px;
     border-radius: 6px;
-    border: 1px solid #e9edf1
+    border: 1px solid #e9edf1;
 }
 
-.page-header .btn {
-    padding: 8px 12px
+/* Vehicles controls - per-page selector left, search & add right */
+.vehicles-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.vehicles-left {
+    display: flex;
+    gap: 8px;
+    align-items: center
+}
+
+.vehicles-right {
+    display: flex;
+    gap: 10px;
+    align-items: center
+}
+
+.vehicles-right input {
+    min-width: 220px
+}
+
+.per-page-select {
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid #e9edf1;
+}
+
+.per-page-label {
+    display: flex;
+    align-items: center;
+    gap: 8px
+}
+
+.per-page-label {
+    flex-direction: row
+}
+
+.per-page-label select,
+.per-page-label input {
+    margin-top: 0
+}
+
+/* Form sections for VehicleForm */
+.form-section {
+    border: 1px solid #e9edf1;
+    background: #fff;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.section-title {
+    margin: 0 0 10px 0;
+    font-size: 1rem;
+    color: var(--muted);
+}
+
+/* Ensure selects inside form sections match input styling */
+.form-section select,
+.select-style,
+.form-section .form-control {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #e9edf1;
+    margin-top: 8px;
+    background: #fff;
+}
+
+/* Footer area on vehicles */
+.vehicles-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.vehicles-footer .actions {
+    display: flex;
+    gap: 8px
+}
+
+/* Toast messages and spinner overlay */
+.app-toast-container {
+    position: fixed;
+    right: 20px;
+    bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 9999;
+}
+
+.toast {
+    background: rgba(0, 0, 0, 0.85);
+    color: white;
+    padding: 10px 12px;
+    border-radius: 6px;
+    min-width: 220px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toast button.toast-close {
+    background: transparent;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.toast.toast-error {
+    background: #e55b5b
+}
+
+.toast.toast-success {
+    background: #2f9d5f
+}
+
+.toast.toast-info {
+    background: rgba(0, 0, 0, 0.85)
+}
+
+.spinner-overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9998;
+}
+
+.spinner {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 6px solid rgba(0, 0, 0, 0.1);
+    border-top-color: var(--primary);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg)
+    }
 }
 
 /* KPIs */
@@ -176,27 +333,28 @@ thead th {
     color: #222
 }
 
-.card h4 {
+.app-card h4 {
     margin-top: 0;
     margin-bottom: 10px
 }
 
+/* Login styles (app-prefixed) */
 .login-page {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex: 1 0 auto;
+    flex: 1 0 auto
 }
 
-.login-card {
+.app-login-card {
     max-width: 640px;
     width: 100%;
     padding: 28px;
     text-align: left
 }
 
-.login-form {
+.app-login-form {
     display: flex;
     flex-direction: column;
     gap: 25px
@@ -216,7 +374,8 @@ input {
     margin-top: 8px
 }
 
-.btn {
+/* App-scoped button to avoid overriding Bootstrap .btn */
+.app-btn {
     cursor: pointer;
     padding: 10px 14px;
     border-radius: 6px;
@@ -224,7 +383,7 @@ input {
     background: #eef2f6
 }
 
-.btn.primary {
+.app-btn.primary {
     background: var(--primary);
     color: #fff;
     border-color: var(--primary)
@@ -243,25 +402,24 @@ input {
 @media print {
 
     .topbar,
-    .btn,
-    .login-card,
-    .page-header input,
-    .page-header .btn,
-    .page-header .card {
+    .app-btn,
+    .app-login-card,
+    .app-page-header input,
+    .app-page-header .app-btn,
+    .app-page-header .app-card {
         display: none !important
     }
 }
 
-/* Keep login form compact on small screens */
 @media (max-width: 640px) {
-    .login-card {
+    .app-login-card {
         max-width: 92%;
         padding: 18px
     }
 }
 
 /* footer */
-.site-footer {
+.app-site-footer {
     font-size: 0.85rem;
     color: var(--muted);
     padding: 0 20px;
@@ -277,15 +435,15 @@ input {
     align-items: center;
     justify-content: space-between;
     background: var(--card);
-    z-index: 999;
+    z-index: 999
 }
 
-.site-footer div {
+.app-site-footer div {
     font-size: 0.85rem;
-    padding: 0 10px;
+    padding: 0 10px
 }
 
-/* Avoid footer overlaying content */
-.container {
+/* Keep footer from overlapping content in the app container */
+.app-container {
     padding-bottom: 40px
 }
